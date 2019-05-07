@@ -143,14 +143,14 @@ $(function(){
             
             $(imagen).appendTo($("div[class*='col-1']"));
         }*/
-        $(".elemento").hover(function(){
-        rellenarTablero();
-        posicionFichas();
-    })
-        
+                
     });
    
-    
+    $(".elemento").hover(function(){
+        rellenarTablero();
+        posicionFichas();
+        })
+
     
     
     
