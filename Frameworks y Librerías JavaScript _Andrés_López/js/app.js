@@ -32,7 +32,7 @@ function posicionFichas(){
     $(".elemento").draggable({
         revert: true
     });
-    
+    var movimientos = 0;
     $(".elemento").droppable({
         
         drop: function(event, ui){
@@ -42,8 +42,9 @@ function posicionFichas(){
             $(this).attr("src", elementoDg);
             $(ui.draggable).attr("src", elementoDp);
             reglasJuego();
+            $("#movimientos-text").text(aumentarMovimientos);
             
-            rellenarTablero();
+            
         }
     })
 }
@@ -121,6 +122,27 @@ function aumentarPuntuacion(){
     return punt+5;
 }
 
+function aumentarMovimientos(){
+    var mov = parseInt($("#movimientos-text").text());
+    return mov+1;
+}
+
+function acabarJuego(){
+    $(".panel-tablero").hide(1600)
+    
+    
+    $(".time").hide("size");
+    
+    $(".titulo-final").animate({
+            opacity: 1
+    }, 1000);
+    
+    $(".panel-score").animate({
+        width: 1200
+    },600);
+    
+}
+
 $(function(){
     animarTitulo();
     
@@ -131,7 +153,7 @@ $(function(){
         }
         $(this).attr("disabled","true");
         posicionFichas();
-
+        inicio();
         //darMatriz();
         //reglasJuego();
         /* if($("div[class*='col-1']").find("img").length<7)
@@ -143,14 +165,14 @@ $(function(){
             
             $(imagen).appendTo($("div[class*='col-1']"));
         }*/
-                
-    });
-   
-    $(".elemento").hover(function(){
+        $(".elemento").hover(function(){
         rellenarTablero();
         posicionFichas();
         })
-
+        
+    });
+   
+    
     
     
     

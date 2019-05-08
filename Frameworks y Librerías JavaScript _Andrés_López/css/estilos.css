@@ -37,11 +37,11 @@ body{
 }
 
 .panel-score{
-  width: 25%;
-  height: 700px;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
+    width: 25%;
+    height: 700px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between; 
 }
 
 
@@ -52,6 +52,7 @@ body{
   border: 10px solid #E87306;
   border-radius: 5px;
   background: rgba(232, 115, 6, 0.5);
+  position: relative;
 }
 
 
@@ -60,6 +61,7 @@ body{
   width: 100%;
   display: flex;
   justify-content: center;
+
 }
 
 .data-titulo, .data-info{
@@ -79,6 +81,7 @@ body{
   font-family: gameFont;
   font-size: 1.2em;
   color: #FF4007;
+     
 }
 .btn-reinicio:hover{
   color: #fff;
@@ -103,4 +106,20 @@ div[class^='col']{
   width: 99.4px;
   height: 96px;
 
+}
+
+#timer{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+.titulo-final{
+    width: 100%;
+    text-align: center;
+    font-family: gameFont;
+    font-size: 2.2em;
+    color: #DCFF0E;
+    text-shadow: 5px 2px 2px black;
+    opacity: 0;
 }
