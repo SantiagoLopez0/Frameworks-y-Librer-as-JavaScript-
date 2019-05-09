@@ -22,19 +22,55 @@ function agregarImagenes(selector){
         var imagen = document.createElement("img");
         $(imagen).attr("src","image/"+numero+".png");
         $(imagen).addClass("elemento");
-        $(imagen).addClass("img-"+i);
         $(imagen).appendTo(colJuego);    
     }
     
 }
 
+function aceptarFichas(){
+    $(".elemento").mousedown(function(){
+        var siguiente = $(this).next();
+        var anterior = $(this).prev();
+        
+        var padre = $(this).parent()[0];
+        var index = $(this).index();
+        var padreIndexDer = $(padre).index()+2;
+        var padreIndexIzq = $(padre).index();
+        var elementoDer = $("div[class*='col-"+padreIndexDer+"']").find("img")[index];
+        var elementoIzq = $("div[class*='col-"+padreIndexIzq+"']").find("img")[index];
+        
+        $(siguiente).addClass("fichasAcept");    
+        $(anterior).addClass("fichasAcept");
+        
+        $(elementoDer).addClass("fichasAcept");
+        $(elementoIzq).addClass("fichasAcept");
+    });
+    
+    $(".elemento").mouseup(function(){
+        var siguiente = $(this).next();
+        var anterior = $(this).prev();
+        
+        var padre = $(this).parent()[0];
+        var index = $(this).index();
+        var padreIndexDer = $(padre).index()+2;
+        var padreIndexIzq = $(padre).index();
+        var elementoDer = $("div[class*='col-"+padreIndexDer+"']").find("img")[index];
+        var elementoIzq = $("div[class*='col-"+padreIndexIzq+"']").find("img")[index];
+        
+        $(siguiente).removeClass("fichasAcept");
+        $(anterior).removeClass("fichasAcept");
+        
+        $(elementoDer).removeClass("fichasAcept");
+        $(elementoIzq).removeClass("fichasAcept");
+    });
+}
+
 function posicionFichas(){
     $(".elemento").draggable({
-        revert: true
+        revert: true,
+        grid: [ 117.0625, 96 ]
     });
-    var movimientos = 0;
-    $(".elemento").droppable({
-        
+    $(".fichasAcept").droppable({
         drop: function(event, ui){
             var elementoDg = $(ui.draggable).attr("src");
             var elementoDp = $(this).attr("src")
@@ -42,9 +78,7 @@ function posicionFichas(){
             $(this).attr("src", elementoDg);
             $(ui.draggable).attr("src", elementoDp);
             reglasJuego();
-            $("#movimientos-text").text(aumentarMovimientos);
-            
-            
+            $("#movimientos-text").text(aumentarMovimientos);        
         }
     })
 }
@@ -55,11 +89,10 @@ function darMatriz(i){
 }
 
 function animar(selector){
-    var puntuacion = $("#score-text").text();
-    $(selector).hide("fast",function(){
+    $(selector).hide("slow",function(){
         $(this).remove();
     })
-              
+      
 
 }
 
@@ -146,35 +179,29 @@ function acabarJuego(){
 $(function(){
     animarTitulo();
     
-    
     $(".btn-reinicio").on("click",function(){
-        for(var i=1; i<8; i++){
-            agregarImagenes($(".col-"+i));    
-        }
-        $(this).attr("disabled","true");
-        posicionFichas();
-        inicio();
-        //darMatriz();
-        //reglasJuego();
-        /* if($("div[class*='col-1']").find("img").length<7)
-        {
-             var numero = Math.floor(Math.random() * (5 - 1)) + 1;
-            var imagen = document.createElement("img");
-            $(imagen).attr("src","image/"+numero+".png");
-            $(imagen).addClass("elemento");
+        if($(".btn-reinicio").text() == "Iniciar"){     
+            for(var i=1; i<8; i++){
+                agregarImagenes($(".col-"+i));    
+            }
             
-            $(imagen).appendTo($("div[class*='col-1']"));
-        }*/
-        $(".elemento").hover(function(){
-        rellenarTablero();
-        posicionFichas();
-        })
-        
-    });
-   
-    
-    
-    
-    
-    
+            $(this).text("Reiniciar");
+            
+            posicionFichas();
+            aceptarFichas();
+            inicio();
+
+            setInterval(function(){
+                rellenarTablero();
+                
+                posicionFichas();
+                aceptarFichas();
+            },500);
+        }
+        if($(".btn-reinicio").text() == "Reiniciar"){
+            $(".btn-reinicio").on("click",function(){
+                location.reload();
+            });
+        }
+    });  
 })

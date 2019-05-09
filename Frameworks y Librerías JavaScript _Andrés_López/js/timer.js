@@ -6,7 +6,7 @@ var minutosPg = $("#minutos");
 var control;
 
 function inicio () {
-    control = setInterval(cronometro,500);    
+    control = setInterval(cronometro,1000);    
 }
 
 function cronometro(){
